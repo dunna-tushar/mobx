@@ -1,8 +1,9 @@
 import React from 'react'
+import Carousels from '../../components/Carousels'
 
 const Trending = () => {
   return (
-    <div>Trending</div>
+    <Carousels/>
   )
 }
 
