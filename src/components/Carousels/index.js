@@ -7,27 +7,21 @@ import "./carousel.css";
 
 const handleDragStart = (e) => e.preventDefault();
 
-const Carousels = () => {
+const Carousels = ({ id, media_type }) => {
   const [credits, setCredits] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/507086/credits?api_key=${REACT_APP_API_KEY}&language=en-US`
-      )
-      .then((res) => {
-        setCredits(res?.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  const items = credits.map((c) => (
+    <div className="carouselItem">
+      <img
+        src={c.profile_path ? `${img_300}/${c.profile_path}` : noPicture}
+        alt={c?.name}
+        onDragStart={handleDragStart}
+        className="carouselItem__img"
+      />
+      <b className="carouselItem__txt">{c?.name}</b>
+    </div>
+  ));
 
-  const items = [
-    <img src="path-to-img" onDragStart={handleDragStart} role="presentation" />,
-    <img src="path-to-img" onDragStart={handleDragStart} role="presentation" />,
-    <img src="path-to-img" onDragStart={handleDragStart} role="presentation" />,
-  ];
   const responsive = {
     0: {
       items: 3,
@@ -40,25 +34,26 @@ const Carousels = () => {
     },
   };
 
+  const fetchCredits = async () => {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/${media_type}/${id}/credits?api_key=${REACT_APP_API_KEY}&language=en-US`
+    );
+    setCredits(data.cast);
+  };
+
+  useEffect(() => {
+    fetchCredits();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <AliceCarousel
       mouseTracking
       infinite
       disableDotsControls
       disableButtonsControls
-      items={items}
       responsive={responsive}
-      // items={credits.map((c) => (
-      //   <div className="carouselItem">
-      //     <img
-      //       src={c.profile_path ? `${img_300}/${c.profile_path}` : noPicture}
-      //       alt={c?.name}
-      //       onDragStart={handleDragStart}
-      //       className="carouselItem__img"
-      //     />
-      //     <b className="carouselItem__txt">{c?.name}</b>
-      //   </div>
-      // ))}
+      items={items}
       autoPlay
     />
   );
