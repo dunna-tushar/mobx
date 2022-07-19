@@ -15,3 +15,4 @@ export const noPicture =
   "https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg";
 
 export const REACT_APP_API_KEY = "9d4b7411f7e257a3c9846b969ce61628";
+// https://api.themoviedb.org/3/search/movie?api_key=9d4b7411f7e257a3c9846b969ce61628&language=en-US&query=xxx&page=1&include_adult=true

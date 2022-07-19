@@ -24,7 +24,6 @@ const Pagination = ({ setPage, numOfPages = 10 }) => {
       }}
     >
       <ThemeProvider theme={theme}>
-        <Stack spacing={2}>
           <Pg
             count={numOfPages}
             hideNextButton
@@ -32,7 +31,6 @@ const Pagination = ({ setPage, numOfPages = 10 }) => {
             color="primary"
             onChange={(e) => handlePageChange(e.target.textContent)}
           />
-        </Stack>
       </ThemeProvider>
     </div>
   );
